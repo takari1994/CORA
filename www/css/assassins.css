@@ -1,0 +1,94 @@
+#page {
+    background-image: url(../img/assassins/assassinsbg.png);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% auto;
+    background-color: #000;
+}
+
+#header {
+    padding: 300px 15px 20px;
+    text-align: center;
+}
+#header img {
+    margin-top: -35px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    float: none;
+    width: 125px;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+#header h2 {
+    margin-top: 15px;
+    font-family: 'Permanent Marker', cursive;
+    display: inline-block;
+    color: #000;
+    text-shadow: 5px 0 0 #fff;
+    font-size: 60px;
+}
+
+#main-navigation { border-radius: 10px; text-align: center;}
+#main-navigation ul#nav-holster li a {
+    padding: 10px 25px;
+    font-family: 'Rancho', cursive;
+    font-size: 20px;
+}
+#main-navigation ul#nav-holster li a:hover {
+    background-color: rgba(255, 0, 0, 0.6) !important;
+    color: #000 !important;
+}
+#main-navigation ul#nav-holster li a:not(.active):hover {
+    border-left: none;
+}
+
+#footer-container { background: linear-gradient(to bottom, #FB0F0F, #4D0303) !important; }
+#footer .copyright { text-shadow: 0px 0px 5px #fff; }
+/*widgets*/
+span.panel-title {
+    font-family: 'Rancho', cursive;
+}
+.panel-title {
+    font-size: 20px !important;
+}
+.panel-primary > .panel-heading {
+    background-image: linear-gradient(to bottom, #84070F 0%, #E20000 100%);
+    padding: 7px 15px;
+}
+.panel-primary {border-color: #C6070A;}
+.panel > .list-group a:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+    color: #000;
+}
+#account-panel > .list-group a:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+    color: #000;
+}
+/*----END---*/
+/*body*/
+.nav-tabs > li.active > a {
+    color: #000;
+}
+.nav-tabs > li > a {
+    font-family: 'Rancho', cursive;
+    font-size: 17px;
+    color: #555;
+}
+.nav-tabs > li > a:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+    color: #fff;
+}
+
+#footer-container {
+    margin-top: 15px;
+    background: #444;
+    border-top: solid 1px #000;
+    box-shadow: inset 0 15px 20px -10px rgba(255,255,255,0.3);
+}
+#footer {
+    margin-top: 0;
+    padding: 10px 0;
+    color: #fff;
+    text-shadow: none;
+}

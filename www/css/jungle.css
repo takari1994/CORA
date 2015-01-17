@@ -1,0 +1,313 @@
+#page {
+    background-image: url('../img/jungle/background.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 1500px 1219px;
+    background-color: linear-gradient(to bottom, #fbf7f3 0%, #e3e3e3 100%); 
+}
+
+#main-navigation {
+    margin: 105px 0 360px  !important;
+    font-family: widfont;
+    font-size: 17px;
+    background-image: linear-gradient(to bottom, #f9f9f9 0%, #c7c7c7 100%);
+    background-size: 100% 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: none;
+}
+#main-navigation ul#nav-holster li {
+    vertical-align: middle;
+}
+#main-navigation ul#nav-holster li a {
+    border-right: none;
+}
+#main-navigation ul#nav-holster li a:not(.active):hover {
+    border-left: none !important;
+    color: #a71414;
+    background: none;
+}
+#main-navigation ul#nav-holster li:nth-child(1){
+    border-left: none !important;
+}
+.server-logo {
+    margin-top: 35px;
+    max-width: 285px;
+    max-height: 250px;
+}
+.nav-wingr {
+    float: right;
+    margin-right: -85px !important;
+    margin-top: 55px !important;
+}
+.nav-wingl {
+    float: left;
+    margin-left: -85px !important;
+    margin-top: 55px !important;
+}
+/*account widget*/
+
+.default-img {
+    float: left;
+    margin-right: -86px;
+    margin-top: -55px;
+    margin-left: -5px;
+}
+
+.widget {
+    margin-top: 70px;
+}
+
+.widget .panel-heading {
+    background-image: linear-gradient(to bottom, #428bca 0%, #2B5D88 100%) !important;
+    text-align: center;
+    color: #1a3953;
+}
+
+div.wid-account {
+    margin-top: 85px;
+}
+
+div.wid-account .panel-heading {
+    background-image: linear-gradient(to bottom, #89f99e 0%, #71b942 100%) !important;
+    text-align: center;
+    color: #183f08;
+}
+div.wid-account .form-control {
+    margin-left: 10px;
+    height: 25px;
+}
+div.wid-account form input.form-control, form input.form-control-static {
+	width: 60% !important;
+}
+div.wid-account .btn-login {
+    background-image: url('../img/jungle/login-btn.png') !important;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 55px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.75);
+    font-family: widfont;
+    font-size: 20px;
+    margin-right: 10px;
+}
+div.wid-account .btn-login:hover {
+    background-position: 0px 0px !important;
+}
+div.wid-account .btn-login:hover,.btn-login:focus {
+    background-position: 0px 0px !important;
+}
+div.wid-account .btn-register {
+    background-image: url('../img/jungle/register-btn.png') !important;
+    background-size: 100% 100%;
+    width: 152px;
+    height: 29px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.75);
+    font-family: widfont;
+    border: none;
+    margin-top: 15px;
+}
+div.wid-account .btn-register:hover,.btn-register:focus {
+    background-position: 0px 0px !important;
+}
+.wid-account form {
+    padding-top: 20px !important;
+}
+.account-img {
+    float: left;
+    margin-top: -70px;
+    margin-right: -97px;
+    margin-left: -25px;
+}
+.register-img {
+    float: left;
+    margin-top: -25px;
+    margin-left: -40px;
+    margin-right: -64px;
+}
+    
+div.wid-ss .panel-heading {
+    background-image: linear-gradient(to bottom, #ffc799 0%, #e77529 100%) !important;
+    text-align: center;
+    color: #742a06;
+}
+.wid-ss {
+    margin-top: 50px;
+}
+.ss-img {
+    float: left;
+    margin-top: -36px;
+    margin-right: -64px;
+    margin-left: -10px;
+}
+.wid-ss table td.desc {
+    font-family: widfont;
+    font-size: 15px;
+    color: #555555 !important;
+}
+.wid-ss table td .label {
+    width: 98px;
+    height: 25px;
+    font-family: widfont;
+    font-size: 15px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.75);
+}
+.wid-ss .label-danger {
+    background-color: #9e0b0f !important;
+}
+.wid-ss .table td {
+    padding: 1px !important;
+}
+
+    
+div.wid-v4p .panel-heading {
+    background-image: linear-gradient(to bottom, #ff8e8e 0%, #ab3023 100%) !important;
+    text-align: center;
+    color: #5e0b0b;
+}
+.wid-v4p {
+    margin-top: 95px;
+}
+.v4p-img,.v4p-img:focus {
+    background-size: 100% 100%;
+    margin-bottom: -10px;
+    display: block;
+    width: 130px;
+    height: 30px;
+    margin: 10px auto;
+    border-radius: 5px;
+    font-family: widfont;
+    line-height: 30px;
+    color: #fff;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.75);
+    text-decoration: none;
+    
+}
+.v4p-img:hover {
+    text-shadow: 1px 0 1px #fff;
+}
+.widv4p-img {
+    float: left;
+    margin-top: -80px;
+    margin-left: -50px;
+    margin-right: -112px;
+}
+
+div.wid-nav {
+    margin-top: 65px;
+}
+
+div.wid-nav .panel-heading {
+    background-image: linear-gradient(to bottom, #b97441 0%, #583909 100%) !important;
+    text-align: center;
+    color: #411e03;
+}
+div.wid-nav .list-group-item {
+    background-color: transparent;
+    border: 1px solid #a1a1a1;
+    font-family: widfont;
+}
+div.wid-nav .list-group-item:hover {
+    color: #000;
+}
+div.wid-nav .list-group {
+    background-image: linear-gradient(to bottom, #f5f5f5 0%, #cfcfcf 100%);
+}
+div.wid-nav a.list-group-item::before {
+    content: url('../img/jungle/navigator_arrow.png');
+}
+.nav-img {
+    float: left;
+    margin-top: -50px;
+    margin-left: -10px;
+    margin-right: -38px;
+}
+
+.wid-rank .table td, .wid-rank .table th {
+    height: 30px;
+}
+
+div.wid-rank {
+    margin-top: 40px;
+}
+div.wid-rank .panel-heading {
+    background-image: linear-gradient(to bottom, #fef58e 0%, #ccae00 100%) !important;
+    text-align: center;
+    color: #8a7c08;
+    padding-bottom: 20px;
+}
+div.wid-rank .panel-title {
+    font-size: 14px;
+}
+div.wid-rank .panel-body {
+    margin-top: -38px;
+    padding: 15px 0 0;
+}
+div.wid-rank .nav-tabs > li.active > a, div.wid-rank .nav-tabs > li.active > a:hover {
+    background-image: url('../img/jungle/player-bg.png');
+    z-index: 2;
+}
+div.wid-rank .nav-tabs > li > a,div.wid-rank .nav-tabs > li > a:hover {
+    border: none !important;
+    background-color: transparent !important;
+    background-image: url('../img/jungle/player-bg2.png');
+    color: rgb(85,85,85);
+    z-index: 0;
+    font-family: widfont;
+    width: 70px;
+    font-size: 14px;
+    padding: 2px 5px 2px 0;
+    text-align: center;
+}
+div.wid-rank .nav-tabs {
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+div.wid-rank .tab-content {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.pvp-img {
+    float: left;
+    margin-top: -30px;
+    margin-left: -20px;
+    margin-right: -37px; 
+}
+.pvp-icon {
+    float: left;
+    margin: -5px -18px 0 3px;
+}
+.guild-icon {
+    float: left;
+    margin: -5px -3px 0 1px;
+}
+
+
+.panel-primary { border: none; }
+
+.panel-heading { padding: 5px; border-bottom: none !important; }
+
+.panel-title { font-family: widfont; font-size: 20px; }
+
+.panel { background-image: linear-gradient(to bottom, #f5f5f5 0%, #cfcfcf 100%) !important; }
+
+.widget { box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+
+@font-face {
+    font-family: widfont;
+    src: url(../fonts/BEBAS___.TTF);
+}
+
+#footer-container {
+    background-color: transparent;
+    background-image: url('../img/jungle/footer-bg2.png');
+    background-size: 475px 120px;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    padding-top: 35px;   
+}

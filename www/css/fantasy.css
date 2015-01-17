@@ -1,0 +1,48 @@
+#page {
+    background-image: url(../img/fantasy/fantasybg.png);
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 100% auto;
+    background-color: #f1dbf8;
+}
+
+#header {
+    padding: 300px 15px 20px;
+    text-align: center;
+}
+#header img {
+    margin-top: -35px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    float: none;
+    width: 125px;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+#header h2 {
+    margin-top: 15px;
+    display: inline-block;
+    color: #000;
+    text-shadow: 5px 0 0 #fff;
+}
+
+#main-navigation { border-radius: 20px; text-align: center; font-family: 'Josefin Sans', sans-serif; }
+#main-navigation ul#nav-holster li a {
+    padding: 10px 25px;
+}
+#main-navigation ul#nav-holster li a:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+    color: #000;
+}
+#main-navigation ul#nav-holster li a:not(.active):hover { border-left: none; }
+
+/*widgets*/
+.panel-primary { border: solid 1px #fff; }
+.panel-heading { border-bottom: none; }
+.panel-primary > .panel-heading {
+    background-image: linear-gradient(to bottom, #F452FF  0%, #c108f7 100%);
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+}
+.wid-nav .list-group { text-align: center; }

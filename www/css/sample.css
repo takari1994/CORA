@@ -1,0 +1,27 @@
+body { background: #444; }
+#page {
+    background-image: url('../img/sample/Ragnarok.Online.full.928685.jpg');
+    background-repeat: no-repeat;
+    background-position: center -180px;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+#header img {
+    -webkit-filter: invert(100%);
+}
+#header h2 {
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+}
+#footer-container {
+    margin-top: 15px;
+    background: #444;
+    border-top: solid 1px #000;
+    box-shadow: inset 0 15px 20px -10px rgba(255,255,255,0.3);
+}
+#footer {
+    margin-top: 0;
+    padding: 10px 0;
+    color: #fff;
+    text-shadow: none;
+}

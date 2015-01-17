@@ -1,0 +1,126 @@
+#page {
+    background-image: url(../img/rig/pagebg.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#header {
+    background-image: url('../img/rig/headerbg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 315px;
+}
+
+#title-nav-holster-container {
+    display: inline-block;
+}
+#main-navigation {
+    background-image: url('../img/rig/navbg.png');
+    background-position: center 1px;
+    background-repeat: no-repeat;
+    border: none;
+    box-shadow: none;
+    margin-top: -45px;
+    padding: 30px 10px 15px;
+    z-index: 1;
+}
+#main-navigation ul#nav-holster { margin: 0; vertical-align: middle; }
+#main-navigation ul#nav-holster li a {
+    padding: 12px 20px;
+    color: black;
+    font-size: 18px;
+    font-family: 'agency FB';
+    text-shadow: 1px 1px 1px #ffffff;
+}
+#main-navigation ul#nav-holster li a:hover {
+    background: none !important;
+    text-shadow: 0 0 5px #fff;
+    color: #003f8e;
+}
+#title-container {
+    margin-right: 10px;
+    min-width: 195px;
+    max-width: 350px;
+    display: inline-block;
+    vertical-align: middle;
+}
+#title-container img {
+    width: 45px;
+}
+#title-container span {
+    margin-top: 15px;
+    font-family: 'Lobster Two', cursive;
+    font-size: 25px;
+    vertical-align: middle;
+}
+#nav-holster {
+    display: inline-block;
+    list-style-type: none;
+}
+
+#nav-holster li { display: inline-block; }
+
+#nav-holster li a { text-decoration: none; }
+
+body { background: #fff; }
+#main-navigation ul#nav-holster li a:not(.active):hover{ border-left: none;}
+
+#footer-container { background: none !important; border-top: none !important; }
+
+/*widget*/
+.panel-primary > .panel-heading {
+    background-image: linear-gradient(to bottom,#f4f4f4,#cccccc) !important;
+    border-bottom: none !important;
+}
+
+.panel-primary {
+    border: none !important;
+}
+
+.panel-title {
+    font-size: 18px;
+    color: #000;
+    font-family: agency FB;
+}
+/*widget*/
+
+#footer-container {
+    margin-top: 15px;
+    background: #444;
+    border-top: solid 1px #000;
+    box-shadow: inset 0 15px 20px -10px rgba(255,255,255,0.3);
+}
+#footer {
+    margin-top: 0;
+    padding: 10px 0;
+    color: #fff;
+    text-shadow: none;
+}
+
+
+@media only screen and (max-width: 1024px){
+    #main-navigation {
+        padding: 20px 10px 15px;
+        background-size: 100%;
+    }
+    #main-navigation ul#nav-holster li a {
+        padding: 12px 15px;
+    }
+    #title-container img {
+        width: 40px;
+    }
+
+}
+@media only screen and (max-width: 1200px) {
+    #main-navigation {
+        padding: 19px 10px 10px;
+        background-size: 100%;
+    }
+    #main-navigation ul#nav-holster li a {
+        padding: 12px 15px;
+    }
+    #title-container img {
+        width: 40px;
+    }
+}

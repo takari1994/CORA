@@ -1,0 +1,1 @@
+INSERT INTO tcp_profile (account_id) SELECT account_id FROM login WHERE account_id NOT IN(0,1);

@@ -1,0 +1,151 @@
+body { margin: 0; background: #fff; font-family: tahoma,arial,sans-serif; font-size: 14px; }
+a,a:hover { text-decoration: none; }
+
+#header {
+    padding: 20px 15px;
+    margin-top: 395px;
+    margin-bottom: -50px;
+}
+#header h2 {
+    font-family: 'Lobster', cursive;
+    color: #333;
+    text-align: center;
+    text-shadow: -1px 1px 1px #fff; 
+    font-size: 90px; 
+}
+#header img {
+    display: none;
+}
+
+#nav-con {
+    margin-top: -80px;
+    z-index: 1;
+    position: relative;
+}
+
+#main-navigation {
+    margin: 0;
+    padding: 30px 0px 0px;
+    background-image: url('../img/juno/navigation.png');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+
+#main-navigation ul#nav-holster { margin: 0 10px; padding: 0; border: none; list-style-type: none; }
+#main-navigation ul#nav-holster li { display: inline-block; }
+#main-navigation ul#nav-holster li:nth-child(1) { border-left: none; }
+#main-navigation ul#nav-holster li a { padding: 35px 25px 15px; position: relative; z-index: 1; display: block; background: transparent; border: none; font-family: 'Coming Soon', cursive; font-size: 16px; font-weight: bold; color: #fff; text-shadow: 1px 1px 1px #000; text-decoration: none; }
+#main-navigation ul#nav-holster li a:hover {
+    background-image: url('../img/juno/nav-hoverbg.gif') !important;
+    background-size: auto 35px !important;
+    background-color: transparent !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    border-left: none !important;
+    color: #ffffb7; text-shadow: 1px 1px 1px #000 !important; text-decoration: none;
+}
+
+#body-container {
+    padding-top: 20px;
+    width: 1040px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.75);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#page {
+    background-image: url('../img/juno/junobg.png');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+#sidebar .wid-account form { padding: 5px; overflow: auto; }
+#sidebar .wid-account form .checkbox { margin: 0 0 0 5px; }
+#sidebar .wid-account form .account-helper { margin: 0 0 0 25px; font-size: 10px; text-transform: uppercase; }
+#sidebar .wid-account div#account-panel { padding: 5px; overflow: auto; }
+#sidebar .wid-account div#account-panel img { margin: 0 5px 5px 0; }
+#sidebar .wid-account div#account-panel .action { margin-left: 105px; margin-bottom: 0; }
+#sidebar .wid-account div#account-panel .action .list-group-item { padding: 5px; font-size: 11px; }
+#sidebar .wid-ss table { margin: 5px auto; }
+#sidebar .wid-ss table td.desc { vertical-align: middle; color: #a4a4a4; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+
+.wid-nav .list-group .list-group-item { text-align: center; }
+
+.panel-primary.widget {
+    border-color: transparent;
+    box-shadow: none;
+}
+.panel-primary > .panel-heading {
+    padding: 35px 0 15px;
+    text-align: center;
+    font-family: 'Coming Soon', cursive;
+    font-weight: bold;
+    color: #8f4c2e;
+    background-image: url('../img/juno/panel-heading.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+#content { margin-bottom: 15px; padding: 0; box-shadow: none; }
+
+#footer { margin-top: 0; color: #fff; text-transform: uppercase; font-size: 11px; }
+#footer-container {
+    margin-top: 25px;
+    background-color: #000;
+    padding: 20px 10px;
+}
+#footer-container .row {
+    margin:0;
+}
+
+
+@media only screen and (max-width: 1024px) {
+    #header {
+	padding: 25px 15px;
+    }
+
+    #nav-con {
+	margin-top: -75px;
+    }
+    #main-navigation {
+	background-size: 100%;
+	background-repeat: no-repeat;
+	padding: 40px 0px 0px;
+    }
+    #main-navigation ul#nav-holster li a {
+	padding: 11.5px 25px;
+    }
+    
+    #body-container {
+        width: 860px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #header {
+	padding: 20px 15px;
+    }
+
+    #nav-con {
+	margin-top: -70px;
+	
+    }
+    #main-navigation {
+	background-size: 100%;
+	background-repeat: no-repeat;
+	padding: 40px 0px 0px;
+    }
+    #main-navigation ul#nav-holster li a {
+	padding: 11px 25px;
+    }
+
+    #body-container {
+	width: 860px;
+    }
+}

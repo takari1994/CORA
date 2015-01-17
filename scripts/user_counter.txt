@@ -1,0 +1,36 @@
+-	script	user_counter	-1,{
+OnPCLoginEvent:
+
+query_sql("SELECT value FROM mapreg WHERE varname='userOnline'",.@lastOnline);
+
+if(getarraysize(.@lastOnline) == 0) {
+	query_sql("INSERT INTO mapreg(varname,value) VALUE('userOnline',1)");
+	set .@userOnline,1;
+} else {
+	query_sql("UPDATE mapreg SET value=value+1 WHERE varname='userOnline'");
+	set .@userOnline,.@lastOnline[0]+1;
+}
+
+query_sql("SELECT value FROM mapreg WHERE varname='userPeak'",.@userPeak);
+
+if((.@userOnline > .@userPeak[0]) || (getarraysize(.@userPeak) == 0)) {
+	if(getarraysize(.@userPeak) == 0)
+		.@newPeak$ = "INSERT INTO mapreg(varname,value) VALUE('userPeak',"+.@userOnline+")";
+	else
+		.@newPeak$ = "UPDATE mapreg SET value="+.@userOnline+" WHERE varname='userPeak'";
+	query_sql(.@newPeak$);
+	.@peak = .@userOnline;
+} else {
+	.@peak = .@userPeak[0];
+}
+
+end;
+
+OnPCLogoutEvent:
+query_sql("SELECT value FROM mapreg WHERE varname='userOnline'",.@lastOnlineB);
+if(.@lastOnlineB[0] > 1)
+	query_sql("UPDATE mapreg SET value=value-1 WHERE varname='userOnline'");
+else
+	query_sql("DELETE FROM mapreg WHERE varname='userOnline'");
+end;
+}

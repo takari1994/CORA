@@ -1,0 +1,20 @@
+Copyright (c) 2014, Takaworks, LLC. All rights reserved. This document servers as a guide and a legal agreement between you and Takaworks, LLC.
+
+CORA™ by Takaworks is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+
+USAGE AND DISTRIBUTION
+You may use, redistribute CORA™ Content Management System in any medium or format, and build upon it an entirely new material provided that the following terms are followed:
+
+1. You must give appropriate credit and provide a link back to Takaworks, LLC.
+
+2. CORA™ is non-commercial, you may not use the material for your commercial advantage or monetization.
+
+3. If you derived an entirely new material from CORA™ you must release it under the same license.
+
+In cases where you need additional rights, please contact Takaworks, LLC.
+
+IDEMNITY
+By using the software, you agree to hold harmless the authors for any direct, indirect, or consequential third-party claims. Any damages, settlements, fees, and other liabilities arising from the misuse of the software, or violation of terms and conditions of this license will not be a responsibility of Takaworks, LLC.
+
+DISCLAIMER OF WARRANTY
+CORA™ IS A FREE SOFTWARE PROVIDED `AS IS` AND DOES NOT COME WITH WARRANTY OF ANY KIND, INCLUDING BUT NOT LIMITED TO, WARRANTY OF QUALITY, USABILITY, PERFORMANCE. YOU ASSUME ALL RISKS ASSOCIATED WITH USING OF THE SOFTWARE.
