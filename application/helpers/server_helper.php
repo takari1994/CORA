@@ -23,7 +23,7 @@ if ( ! function_exists('ping_server')) {
 }
 
 if ( ! function_exists('parse_msgcode')) {
-    function parse_msgcode($code,$cond=null) {
+    function parse_msgcode($code,$specmsg=null) {
         require(APP_PATH."/views/etc/msgcode.php");   
         
         if($code >= 100 AND $code <= 199) {

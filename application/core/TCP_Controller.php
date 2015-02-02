@@ -11,6 +11,9 @@ class TCP_Controller extends CI_Controller{
     }
        
     public function page_build($title,$layout=null,$page=null,$data=null) {
+        $this->load->model('msettings');
+        $gen_settings = $this->msettings->get_set_gen();
+        
         if(!$this->session->userdata('account_id')) {
             if($this->input->cookie('userid')) {
                 if('true' == $this->input->cookie('login')) {
@@ -27,20 +30,14 @@ class TCP_Controller extends CI_Controller{
             }
         }
         
-        if(null == $layout) {
-            $this->load->model('msettings');
-            $gen_settings = $this->msettings->get_set_gen();
+        if(null == $layout)
             $layout = $gen_settings[0]->theme;
-        }
         
         if(file_exists(APP_PATH.'/views/layouts/'.$layout.'/pages/'.$page.'.php')) {
             $page = 'layouts/'.$layout.'/pages/'.$page;
         } else {
             $page = 'pages/'.$page;
         }
-        
-        $this->load->model('msettings');
-        $gen_settings = $this->msettings->get_set_gen();
         
         $this->global_title = $gen_settings[0]->serv_name;
         $data['serv_name'] = $gen_settings[0]->serv_name;
@@ -50,7 +47,14 @@ class TCP_Controller extends CI_Controller{
         $this->template->title($title,$this->global_title);
         $this->template->set_layout($layout.'/index');
         
-        $this->template->build($page,$data);
+        if(true == $gen_settings[0]->const_mode) {
+            if(!$this->session->userdata('admin_userid'))
+                $this->load->view('pages/construction',$data);
+            else
+                $this->template->build($page,$data);
+        } else {
+            $this->template->build($page,$data);
+        }
     }
     
     public function get_partials($layout) {
@@ -111,17 +115,17 @@ class TCP_Controller extends CI_Controller{
         }
     }
     
-    public function search($tbl,$col,$query,$index=null,$pp=null) {
+    public function search($tbl,$col,$query,$index=null,$pp=null,$count=null) {
         $this->load->model('mdatabase');
         
         switch($tbl) {
             case 'user':
                 break;
             case 'item':
-                $search = $this->mdatabase->search('item_db',$col,$query,$index,$pp);
+                $search = $this->mdatabase->search('item_db',$col,$query,$index,$pp,'AND',$count);
                 break;
             case 'mob':
-                $search = $this->mdatabase->search('mob_db',$col,$query,$index,$pp);
+                $search = $this->mdatabase->search('mob_db',$col,$query,$index,$pp,'AND',$count);
         }
         
         return $search;

@@ -28,7 +28,7 @@ class Dashboard extends TCP_Controller {
             $this->load->model('mpost');
             $title = "View All Posts";
             $data['posts'] = $this->mpost->get_posts(null,null,$index,$pp);
-            $data['tp'] =    count($this->mpost->get_posts(null,null));
+            $data['tp'] =    $this->mpost->get_posts(null,null,null,null,null,true);
             $page = 'dashboard/posts/posts';
         } else {
             $action = $_GET['action'];
@@ -102,7 +102,7 @@ class Dashboard extends TCP_Controller {
             $this->load->model('mpage');
             $title = "View Pages";
             $data['pages'] = $this->mpage->get_pages(null,$index,$pp);
-            $data['tp'] =    count($this->mpage->get_pages());
+            $data['tp'] =    $this->mpage->get_pages(null,null,null,true);
             $page = 'dashboard/pages/pages';
         } else {
             switch($_GET['action']) {
@@ -179,7 +179,7 @@ class Dashboard extends TCP_Controller {
                     $sort = array($_GET['sort'],$_GET['order']);
                 }
                 
-                $data['tp']    = count($this->maccount->get_profile($cond,null,null,$search));
+                $data['tp']    = $this->maccount->get_profile($cond,null,null,$search,null,true);
                 $data['users'] = $this->maccount->get_profile($cond,$index,$pp,$search,$sort);
             } else {
                 $data['mode'] = 'user';
@@ -281,7 +281,7 @@ class Dashboard extends TCP_Controller {
                 
                 $this->load->model('msettings');
                 $data['gen_settings'] = $this->msettings->get_set_gen();
-                $data['tp']           = count($this->maccount->get_characters($cond,null,null,null,$search));
+                $data['tp']           = $this->maccount->get_characters($cond,null,null,null,$search,true);
                 $data['chars']        = $this->maccount->get_characters($cond,$index,$pp,$sort,$search);
             } else {
                 $data['mode'] = 'character';
@@ -376,7 +376,7 @@ class Dashboard extends TCP_Controller {
                     $sort = array($_GET['sort'],$_GET['order']);
                 }
                 
-                $data['tp'] = count($this->maccount->get_ipbanlist($cond,null,null,null,$search));
+                $data['tp'] = $this->maccount->get_ipbanlist($cond,null,null,null,$search,true);
                 $data['ip_ban_list'] = $this->maccount->get_ipbanlist($cond,$index,$pp,$sort,$search);
             } else {
                 $title = "Add New IP";
@@ -515,11 +515,11 @@ class Dashboard extends TCP_Controller {
             if(isset($_GET['cat'])) {
                 switch($_GET['cat']) {
                     case 'consume':
-                        $cond = array('index'=>'item_db.type','val'=>array(0,2,11,18)); break;
+                        $cond = array('index'=>'type','val'=>array(0,2,11,18)); break;
                     case 'head':
                         $cond = array('index'=>'equip_locations','val'=>array(1,256,257,512,513,768,769)); break;
                     case 'weapon':
-                        $cond = array('index'=>'item_db.type','val'=>array($weapon_id)); break;
+                        $cond = array('index'=>'type','val'=>array($weapon_id)); break;
                     case 'shield':
                         $cond = array('index'=>'equip_locations','val'=>array(32)); break;
                     case 'armor':
@@ -531,18 +531,18 @@ class Dashboard extends TCP_Controller {
                     case 'accessories':
                         $cond = array('index'=>'equip_locations','val'=>array(8,128,136)); break;
                     case 'pets':
-                        $cond = array('index'=>'item_db.type','val'=>array(7,8)); break;
+                        $cond = array('index'=>'type','val'=>array(7,8)); break;
                     case 'cards':
-                        $cond = array('index'=>'item_db.type','val'=>array(6)); break;
+                        $cond = array('index'=>'type','val'=>array(6)); break;
                     case 'costumes':
                         $cond = array('index'=>'equip_locations','val'=>array(1024,2048,3072,4096,5120,6144,7168,8192));
                     case 'misc':
-                        $cond = array('index'=>'item_db.type','val'=>array(3,10)); break;
+                        $cond = array('index'=>'type','val'=>array(3,10)); break;
                 }
             }
             
             $data['items'] = $this->mshop->get_shop_items(null,$index,$pp,$cond);
-            $data['tp']    = count($this->mshop->get_shop_items());
+            $data['tp']    = count($this->mshop->get_shop_items(null,null,null,$cond));
             
             $page = 'dashboard/shop/shop';
             $title = "Cash Shop";
@@ -645,6 +645,7 @@ class Dashboard extends TCP_Controller {
                             
                             if(isset($_POST['capt_pub_key'])){ $capt_pub_key = $_POST['capt_pub_key']; } else { $capt_pub_key = null; }
                             if(isset($_POST['capt_pvt_key'])){ $capt_pvt_key = $_POST['capt_pvt_key']; } else { $capt_pvt_key = null; }
+                            if(isset($_POST['const_mode'])) { $const_mode = 1; } else { $const_mode = 0; }
                             
                             $this->load->model('mpage');
                             $this->load->model('msettings');
@@ -652,7 +653,9 @@ class Dashboard extends TCP_Controller {
                             $home = $_POST['homepage'];
                             $tos  = $_POST['tospage'];
                             
-                            $update = $this->msettings->update_set_gen($serv_name,$theme,$home,$tos,$emulator,$capt_pvt_key,$capt_pub_key);
+                            $up_data = array('serv_name'=>$serv_name,'theme'=>$theme,'homepage'=>$home,'tospage'=>$tos,'emulator'=>$emulator,'capt_pvt_key'=>$capt_pvt_key,'capt_pub_key'=>$capt_pub_key,'const_mode'=>$const_mode);
+                            
+                            $update = $this->msettings->update_set_gen($up_data);
                             
                             if(true == $update) {
                                 $url = current_url().'?msgcode=104';
@@ -677,32 +680,34 @@ class Dashboard extends TCP_Controller {
                         $title = "Account Settings";
                         $page = "dashboard/settings/set_account";
                     } else if($_GET['action'] == 'update') {
-                        if(isset($_POST['un_allow_char']) AND isset($_POST['pw_allow_char']) AND isset($_POST['min_age']) AND is_numeric($_POST['min_age'])) {
-                            $un_allow_char = $_POST['un_allow_char'];
-                            $pw_allow_char = $_POST['pw_allow_char'];
-                            $min_age = $_POST['min_age'];
+                        if(isset($_POST['un_allow_char']) AND isset($_POST['pw_allow_char']) AND isset($_POST['un_format_error']) AND isset($_POST['pw_format_error']) AND isset($_POST['min_age']) AND is_numeric($_POST['min_age'])) {
+                            $un_allow_char   = $_POST['un_allow_char'];
+                            $pw_allow_char   = $_POST['pw_allow_char'];
+                            $un_format_error = $_POST['un_format_error'];
+                            $pw_format_error = $_POST['pw_format_error'];
+                            $min_age         = $_POST['min_age'];
                             if(isset($_POST['char_res_pos'])) { $char_res_pos = $_POST['char_res_pos']; } else { $char_res_pos = null; }
                             if(isset($_POST['char_no_res'])) { $char_no_res = $_POST['char_no_res']; } else { $char_no_res = null; }
                             if(isset($_POST['req_email_ver'])) { $req_email_ver = 1; } else { $req_email_ver = 0; }
                             if(isset($_POST['sex_allow_change'])) { $sex_allow_change = 1; } else { $sex_allow_change = 0; }
                             if(isset($_POST['bday_allow_change'])) { $bday_allow_change = 1; } else { $bday_allow_change = 0; }
                             if(isset($_POST['email_allow_dupe'])) { $email_allow_dupe = 1; } else { $email_allow_dupe = 0; }
-                            if(isset($_POST['req_capt_log'])) { $req_capt_log = 1; } else { $req_capt_log = 0; }
+                            if(isset($_POST['un_allow_change'])) { $un_allow_change = 1; } else { $un_allow_change = 0; }
                             if(isset($_POST['req_capt_reg'])) { $req_capt_reg = 1; } else { $req_capt_reg = 0; }
                             if(isset($_POST['use_md5'])) { $use_md5 = 1; } else { $use_md5 = 0; }
                             
                             $this->load->model('msettings');
                             
-                            if($req_capt_log OR $req_capt_reg) {
+                            if($req_capt_reg) {
                                 $gen_settings = $this->msettings->get_set_gen();
                                 if(null == $gen_settings[0]->capt_pvt_key OR null == $gen_settings[0]->capt_pub_key)
                                     redirect(current_url().'?msgcode=418','refresh');
                             }
                             
                             $up_data = array(
-                                'un_allow_char' => $un_allow_char, 'pw_allow_char' => $pw_allow_char, 'char_res_pos' => $char_res_pos, 'char_no_res' => $char_no_res,
-                                'min_age' => $min_age, 'req_email_ver' => $req_email_ver, 'sex_allow_change' => $sex_allow_change, 'email_allow_dupe' => $email_allow_dupe,
-                                'req_capt_log' => $req_capt_log, 'req_capt_reg' => $req_capt_reg, 'use_md5' => $use_md5, 'bday_allow_change' => $bday_allow_change
+                                'un_allow_char' => $un_allow_char, 'pw_allow_char' => $pw_allow_char, 'un_format_error' => $un_format_error, 'pw_format_error' => $pw_format_error,
+                                'char_res_pos' => $char_res_pos, 'char_no_res' => $char_no_res, 'min_age' => $min_age, 'req_email_ver' => $req_email_ver, 'sex_allow_change' => $sex_allow_change,
+                                'email_allow_dupe' => $email_allow_dupe, 'un_allow_change' => $un_allow_change, 'req_capt_reg' => $req_capt_reg, 'use_md5' => $use_md5, 'bday_allow_change' => $bday_allow_change
                             );
                             
                             $update = $this->msettings->update_set_acc($up_data);
@@ -847,31 +852,31 @@ class Dashboard extends TCP_Controller {
             case "ingame-login":
                 $title = 'In-Game Login Log';
                 $page  = 'dashboard/logs/ingame/login';
-                $data['tp']   = count($this->mlogs->get_log_login(1,$cond,null,null,null,$search));
-                $data['logs'] = $this->mlogs->get_log_login(1,$cond,$index,$pp,$sort,$search);
+                $data['tp']   = $this->mlogs->get_log_login($cond,null,null,null,$search,true);
+                $data['logs'] = $this->mlogs->get_log_login($cond,$index,$pp,$sort,$search);
                 break;
             case "chat":
                 $title = 'Chat Log';
                 $page  = 'dashboard/logs/ingame/chat';
-                $data['tp']   = count($this->mlogs->get_log_chat($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_chat($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_chat($cond,$index,$pp,$sort,$search);
                 break;
             case "pick":
                 $title = 'Pick Log';
                 $page  = 'dashboard/logs/ingame/pick';
-                $data['tp']   = count($this->mlogs->get_log_pick($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_pick($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_pick($cond,$index,$pp,$sort,$search);
                 break;
             case "zeny":
                 $title = 'Zeny Log';
                 $page  = 'dashboard/logs/ingame/zeny';
-                $data['tp']   = count($this->mlogs->get_log_zeny($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_zeny($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_zeny($cond,$index,$pp,$sort,$search);
                 break;
             case "mvp":
                 $title = 'MVP Log';
                 $page  = 'dashboard/logs/ingame/mvp';
-                $data['tp']   = count($this->mlogs->get_log_mvp($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_mvp($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_mvp($cond,$index,$pp,$sort,$search);
                 break;
             case "atcommand":
@@ -880,13 +885,13 @@ class Dashboard extends TCP_Controller {
                 }
                 $title = 'Atcommand Log';
                 $page  = 'dashboard/logs/ingame/atcommand';
-                $data['tp']   = count($this->mlogs->get_log_atcommand($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_atcommand($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_atcommand($cond,$index,$pp,$sort,$search);
                 break;
             case "web-login":
                 $title = 'Web Login Log';
                 $page  = 'dashboard/logs/web/login';
-                $data['tp']   = count($this->mlogs->get_log_tcp(array('Login'),$cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_tcp(array('Login'),$cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_tcp(array('Login'),$cond,$index,$pp,$sort,$search);
                 break;
             case "ban":
@@ -896,31 +901,31 @@ class Dashboard extends TCP_Controller {
                 }
                 $title = 'Ban Log';
                 $page  = 'dashboard/logs/web/ban';
-                $data['tp']   = count($this->mlogs->get_log_tcp(array('Account Ban','Char Ban','IP Ban'),$cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_tcp(array('Account Ban','Char Ban','IP Ban'),$cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_tcp(array('Account Ban','Char Ban','IP Ban'),$cond,$index,$pp,$sort,$search);
                 break;
             case "vote":
                 $title = 'Vote Log';
                 $page  = 'dashboard/logs/web/vote';
-                $data['tp']   = count($this->mlogs->get_log_tcp(array('Vote'),$cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_tcp(array('Vote'),$cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_tcp(array('Vote'),$cond,$index,$pp,$sort,$search);
                 break;
             case "donate":
                 $title = 'Donate Log';
                 $page  = 'dashboard/logs/web/donate';
-                $data['tp']   = count($this->mlogs->get_log_donate($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_donate($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_donate($cond,$index,$pp,$sort,$search);
                 break;
             case "shop":
                 $title = 'Shop Log';
                 $page  = 'dashboard/logs/web/shop';
-                $data['tp']   = count($this->mlogs->get_log_shop($cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_shop($cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_shop($cond,$index,$pp,$sort,$search);
                 break;
             case "acc-update":
                 $title = 'Account Update Log';
                 $page  = 'dashboard/logs/web/account_update';
-                $data['tp']   = count($this->mlogs->get_log_tcp(array('Account Update'),$cond,null,null,null,$search));
+                $data['tp']   = $this->mlogs->get_log_tcp(array('Account Update'),$cond,null,null,null,$search,true);
                 $data['logs'] = $this->mlogs->get_log_tcp(array('Account Update'),$cond,$index,$pp,$sort,$search);
         }
         

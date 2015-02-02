@@ -79,10 +79,6 @@ $settings = array(
     'db_pass'               => '',
     'db_name'               => 'ragnarok',
     'db_log_name'           => 'log',
-
-    /* ----------------------------------------------------------------- *
-     * Extra Configurations                                              *
-     * ----------------------------------------------------------------- */
     
     /* -------------------------------------------------------------------
      * ROChargen
@@ -97,6 +93,12 @@ $settings = array(
      * -------------------------------------------------------------------
      */
     
-    'use_iteminfo_lua'      => false,
+    'use_iteminfo_lua'      => true,
+    
+    /* ----------------------------------------------------------------- *
+     * Extra Configurations                                              *
+     * ----------------------------------------------------------------- */
+    
+    'memory_limit'          => '32M'    // Change the PHP memory limit allocation. WARNING: Increasing this value may cause exhaustion in your server. Use at your own risk!
     
 );

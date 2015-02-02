@@ -21,7 +21,7 @@ class Home extends TCP_Controller {
             
             $this->load->model('mpost');
             $data['posts'] = $this->mpost->get_posts(null,null,$index,$pp);
-            $data['tp'] =    count($this->mpost->get_posts(null,null));
+            $data['tp'] =    $this->mpost->get_posts(null,null,null,null,null,true);
         } else if (0 < $settings[0]->homepage) {
             $this->load->model('mpage');
             $home = $this->mpage->get_pages($settings[0]->homepage);

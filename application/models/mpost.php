@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed!');
 
 class Mpost extends CI_Model {
-    public function get_posts($postid=null,$event=false,$index=null,$pp=null,$cond=null) {
+    public function get_posts($postid=null,$event=false,$index=null,$pp=null,$cond=null,$count=null) {
         $return_value = null;
         if(true != $event)
             $this->db->select('tcp_post.post_id,title,content,author,disp_name as userid,date,type');
@@ -17,9 +17,13 @@ class Mpost extends CI_Model {
         if(null != $postid) { $this->db->where(array('tcp_post.post_id'=>$postid)); }
         if(null != $cond) { $this->db->where($cond); }
         
-        $query = $this->db->get();
-        
-        if(0 < $query->num_rows()) { $return_value = $query->result(); }
+        if(null != $count AND true == $count) {
+            $query = $this->db->count_all_results();
+            $return_value = $query;
+        } else {
+            $query = $this->db->get();
+            if(0 < $query->num_rows()) { $return_value = $query->result(); }
+        }
         
         return $return_value;
     }

@@ -14,7 +14,7 @@
         z-index: 3;
     }
 </style>
-<div class="col-md-4" id="widget_list">
+<div class="col-md-3" id="widget_list">
     <div class="loading-container">&nbsp;</div>
     <div class="input-group">
         <select id="wid_select" class="form-control">
@@ -41,7 +41,7 @@
     <?php endif; ?>
     </form>
 </div>
-<div class="col-md-8" id="wid-set-container">
+<div class="col-md-9" id="wid-set-container">
 </div>
 <script type="text/javascript">
     $('#wid_areas').change(function() {

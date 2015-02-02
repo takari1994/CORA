@@ -54,7 +54,8 @@ class Account extends TCP_Controller {
     }
     
     public function profile() {
-        $this->check_login();
+        if(!$this->session->userdata('admin_userid'))
+            $this->check_login();
         
         if(!isset($_GET['id']))
             redirect(current_url().'?id='.$this->session->userdata('account_id'),'refresh');
@@ -100,11 +101,13 @@ class Account extends TCP_Controller {
     }
     
     public function update() {
-        $this->check_login();
+        if(!$this->session->userdata('admin_userid'))
+            $this->check_login();
         
         if(isset($_POST['account_id']) AND isset($_POST['username']) AND isset($_POST['email']) AND isset($_POST['gender']) AND isset($_POST['fname']) AND isset($_POST['lname']) AND isset($_POST['birthday'])) {
             $account_id = $_POST['account_id']; $username = $_POST['username']; $email = $_POST['email']; $gender = $_POST['gender'];
             $fname = $_POST['fname']; $lname = $_POST['lname']; $birthday = $_POST['birthday'];
+            $donate_points = $_POST['donate_points']; $vote_points = $_POST['vote_points'];
             
             if($this->session->userdata('account_id') == $account_id OR $this->session->userdata('admin_userid')) {
                 if($_FILES['avatar']['name'] != null) {
@@ -127,20 +130,26 @@ class Account extends TCP_Controller {
                     redirect(base_url().'error/restricted','refresh');
                 
                 $old_username = $old[0]->userid; $old_email = $old[0]->email; $old_fname = $old[0]->fname; $old_lname = $old[0]->lname; $old_gender = $old[0]->sex; $old_birthday = $old[0]->birthday; $old_group = $old[0]->group_id;
+                $old_donate_points = $old[0]->donate_points; $old_vote_points = $old[0]->vote_points;
                 
                 $note = null;
                 
                 if($username != $old_username) {
-                    $note .= ' username';
-                    $username_avail = $this->maccount->check_detail_avail(array('username',$username));
-                    if(0 == $username_avail) {
-                        $url = base_url().'account/profile?id='.$account_id.'&msgcode=407'; //Error 407 - Username already taken
+                    if(0 == $acc_set[0]->un_allow_change AND !$this->session->userdata('admin_userid')) {
+                        $url = base_url().'account/profile?id='.$account_id.'&msgcode=430'; //Error 430 - Username change not allowed
                         redirect($url,'refresh');
-                    }
-                    
-                    if(!preg_match($acc_set[0]->un_allow_char,$username)) {
-                        $url = base_url().'account/profile?id='.$account_id.'&msgcode=406'; //Error 406 - Invalid username
-                        redirect($url,'refresh');
+                    } else {
+                        $note .= ' username';
+                        $username_avail = $this->maccount->check_detail_avail(array('username',$username));
+                        if(0 == $username_avail) {
+                            $url = base_url().'account/profile?id='.$account_id.'&msgcode=407'; //Error 407 - Username already taken
+                            redirect($url,'refresh');
+                        }
+                        
+                        if(!preg_match($acc_set[0]->un_allow_char,$username)) {
+                            $url = base_url().'account/profile?id='.$account_id.'&msgcode=406'; //Error 406 - Invalid username
+                            redirect($url,'refresh');
+                        }
                     }
                 }
                 
@@ -176,13 +185,35 @@ class Account extends TCP_Controller {
                 if($gender != $old_gender) { $note .= ' gender'; }
                 
                 if($birthday != $old_birthday) {
-                    $url = base_url().'account/profile?id='.$account_id.'&msgcode=416'; //Error 416 - Birthday change not allowed
-                    redirect($url,'refresh');
+                    if(0 == $acc_set[0]->bday_allow_change AND !$this->session->userdata('admin_userid')) {
+                        $url = base_url().'account/profile?id='.$account_id.'&msgcode=416'; //Error 416 - Birthday change not allowed
+                        redirect($url,'refresh');
+                    } else {
+                        if($acc_set[0]->min_age > 0) {
+                            $age = $this->get_age($birthday);
+                            if($age < $acc_set[0]->min_age)
+                                redirect(base_url().'account/profile?id='.$account_id.'&msgcode=411','refresh');
+                        }
+                    }
                 }
                 
                 if($birthday != $old_birthday){ $note .= ' birthday'; }
                 
-                $update = $this->maccount->update_profile($account_id,$username,$email,$gender,$fname,$lname,$birthday);
+                if($old_donate_points != $donate_points) {
+                    if(!$this->session->userdata('admin_userid'))
+                        $donate_points = $old_donate_points;
+                    else
+                        $note .= ' credits';
+                }
+                
+                if($old_vote_points != $vote_points) {
+                    if(!$this->session->userdata('admin_userid'))
+                        $vote_points = $old_vote_points;
+                    else
+                        $note .= ' vpoints';
+                }
+                
+                $update = $this->maccount->update_profile($account_id,$username,$email,$gender,$fname,$lname,$birthday,$donate_points,$vote_points);
                 
                 if(true == $update) {
                     if($account_id == $this->session->userdata('account_id')) {

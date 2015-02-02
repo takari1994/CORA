@@ -17,18 +17,8 @@ class Post extends TCP_Controller {
         $this->load->model('mpost');
         $data['crumbs'] = $this->crumbs;
         $data['posts']  = $this->mpost->get_posts(null,null,$index,$pp);
-        $data['tp']     = count($this->mpost->get_posts(null,null));
+        $data['tp']     = $this->mpost->get_posts(null,null,null,null,null,true);
         $this->page_build($title,null,'posts',$data);
-    }
-    
-    public function get_posts_ajax() {
-        if(!isset($_GET['page']))
-            $page = 1;
-        else 
-            $page = $_GET['page'];
-        
-        $pp = $_GET['pp'];
-        $index = $pp*($page-1);
     }
     
     public function news() {
@@ -48,7 +38,7 @@ class Post extends TCP_Controller {
         $this->crumbs[] = array('desc'=>'Post','uri'=>'post');
         $data['crumbs'] = $this->crumbs;
         $data['posts']  = $this->mpost->get_posts(null,null,$index,$pp,$cond);
-        $data['tp']     = count($this->mpost->get_posts(null,null,null,null,$cond));
+        $data['tp']     = $this->mpost->get_posts(null,null,null,null,$cond,true);
         $this->page_build($title,null,'posts',$data);
     }
     
@@ -69,7 +59,7 @@ class Post extends TCP_Controller {
         $this->crumbs[] = array('desc'=>'Post','uri'=>'post');
         $data['crumbs'] = $this->crumbs;
         $data['posts']  = $this->mpost->get_posts(null,null,$index,$pp,$cond);
-        $data['tp']     = count($this->mpost->get_posts(null,null,null,null,$cond));
+        $data['tp']     = $this->mpost->get_posts(null,null,null,null,$cond,true);
         $this->page_build($title,null,'posts',$data);
     }
     

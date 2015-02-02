@@ -6,8 +6,7 @@ class Msettings extends CI_Model {
         return ($query ? $query->result():null);
     }
     
-    public function update_set_gen($serv_name,$theme,$home,$tos,$emulator,$capt_pvt_key,$capt_pub_key) {
-        $data = array('serv_name'=>$serv_name,'theme'=>$theme,'homepage'=>$home,'tospage'=>$tos,'emulator'=>$emulator,'capt_pvt_key'=>$capt_pvt_key,'capt_pub_key'=>$capt_pub_key);
+    public function update_set_gen($data) {
         $query = $this->db->update('tcp_set_gen',$data);
         return ($query ? true:false);
     }

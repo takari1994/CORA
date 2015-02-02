@@ -33,7 +33,7 @@ $total_vp = 0;
             <td>
                 <input type="hidden" name="item[]" value="<?php echo $item['item_id']; ?>" />
                 <input type="hidden" name="qty[]" value="<?php echo $item['qty']; ?>" />
-                <img src="http://localhost/tcp/www/ROChargen/item/<?php echo $item['item_id']; ?>" />&nbsp;<?php echo $item['name']; ?>
+                <img src="ROChargen/item/<?php echo $item['item_id']; ?>" />&nbsp;<?php echo $item['name']; ?>
             </td>
             <td class="center">x<?php echo $item['qty']; ?></td>
             <td class="right">

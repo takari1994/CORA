@@ -26,7 +26,9 @@ breadcrumb($crumbs,$active);
                 </tr>
                 <tr>
                     <td style="width:25%; vertical-align: top !important;"><strong>Description</strong></td>
-                    <td style="max-width: 1px;" colspan="3"><?php echo file_get_contents(base_url().'ROChargen/itemdesc/'.$item->id); ?></td>
+                    <td style="max-width: 1px;" colspan="3" class="item-box-desc" data-id="<?php echo $item->id; ?>">
+                        <div class="item-box-desc-content-<?php echo $item->id; ?>"><img src="img/loading.gif" style="width: 18px;" /> Loading...</div>
+                    </td>
                 </tr>
                 <tr>
                     <td style="width:25%"><strong>ID</strong></td>
@@ -36,7 +38,7 @@ breadcrumb($crumbs,$active);
                 </tr>
                 <tr>
                     <td style="width:25%"><strong>Weight</strong></td>
-                    <td style="width:25%"><?php echo $item->weight; ?></td>
+                    <td style="width:25%"><?php echo $item->weight/10; ?></td>
                     <td style="width:25%"><strong>Sell</strong></td>
                     <td style="width:25%"><?php echo ($item->price_sell ? $item->price_sell.' z':'<em>NULL</em>'); ?></td>
                 </tr>
@@ -57,3 +59,13 @@ breadcrumb($crumbs,$active);
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(window).load(function() {
+        $('.item-box-desc').each(function(index) {
+            var item_id = $(this).attr('data-id');
+            $.post('ROChargen/itemdesc/'+item_id, function(data) {
+                $('.item-box-desc-content-'+item_id).html(data);
+            });
+        });
+    });
+</script>

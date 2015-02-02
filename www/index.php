@@ -21,6 +21,8 @@ require('settings.php');
  *
  */
 
+ini_set('memory_limit',$settings['memory_limit']);
+
 if($settings['dev_mode'])
 	define('ENVIRONMENT', 'development');
 else

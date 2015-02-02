@@ -46,7 +46,7 @@ breadcrumb($crumbs,$active);
             ?>
         </div>
         <div class="col-md-7">
-            <form action="account/update" method="post" enctype="multipart/form-data">
+            <form action="account/update" method="post" enctype="multipart/form-data" id="profile-form">
                 <input type="hidden" name="account_id" value="<?php echo $profile[0]->account_id; ?>" />
                 <table class="profile-info">
                     <tr>
@@ -66,7 +66,7 @@ breadcrumb($crumbs,$active);
                     </tr>
                     <tr>
                         <td>Username&nbsp;</td>
-                        <td><input type="text" class="form-control" name="username" value="<?php echo $profile[0]->userid; ?>" required /></td>
+                        <td><input type="text" class="form-control" name="username" value="<?php echo $profile[0]->userid; ?>"<?php if(false == $set_acc[0]->un_allow_change AND !$this->session->userdata('admin_userid')){ echo ' readonly';} ?> required /></td>
                     </tr>
                     <tr>
                         <td>Password&nbsp;</td>
@@ -90,7 +90,7 @@ breadcrumb($crumbs,$active);
                     <tr>
                         <td>Birthday&nbsp;</td>
                         <td>
-                            <input type="text" name="birthday" class="form-control" placeholder="Birthday" data-date-format="yyyy-mm-dd" value="<?php echo $profile[0]->birthday; ?>" readonly />
+                            <input type="text" name="birthday" class="<?php if(1 == $set_acc[0]->bday_allow_change OR $this->session->userdata('admin_userid')){ echo 'datepicker-input-normal ';} ?>form-control" placeholder="Birthday" data-date-format="yyyy-mm-dd" value="<?php echo $profile[0]->birthday; ?>" readonly required />
                         </td>
                     </tr>
                 </table>
@@ -110,11 +110,11 @@ breadcrumb($crumbs,$active);
                 </tr>
                 <tr>
                     <td>Credits</td>
-                    <td><input type="text" class="form-control" value="<?php echo $donate_points; ?>" readonly /></td>
+                    <td><input type="text" class="form-control" form="profile-form" name="donate_points" value="<?php echo $donate_points; ?>"<?php if(!$this->session->userdata('admin_userid')){ echo ' readonly'; } ?> /></td>
                 </tr>
                 <tr>
                     <td>VPOINTS</td>
-                    <td><input type="text" class="form-control" value="<?php echo $vote_points; ?>" readonly /></td>
+                    <td><input type="text" class="form-control" form="profile-form" name="vote_points" value="<?php echo $vote_points; ?>"<?php if(!$this->session->userdata('admin_userid')){ echo ' readonly'; } ?> /></td>
                 </tr>
             </table>
             </form>

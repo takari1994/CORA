@@ -84,6 +84,12 @@ if(isset($_GET['msgcode'])) {
                 <input type="text" class="form-control" name="capt_pvt_key" value="<?php echo $settings[0]->capt_pvt_key; ?>" />
                 <span class="help-block">Use the private key provided by Google&rsquo;s reCaptcha.</span>
             </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="const_mode" value="1"<?php if(1 == $settings[0]->const_mode){ echo " checked"; } ?> /> Enable Construction Mode.
+                </label>
+                <span class="help-block inline"><strong>Note:</strong> Change your "under construction" page in /cora/application/views/pages/construction.php.</span>
+            </div>
             <div class="spacer"></div>
             <div class="right">
                 <input type="submit" class="btn btn-primary" name="submit" value="Save Changes">

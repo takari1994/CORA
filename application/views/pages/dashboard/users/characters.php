@@ -73,10 +73,10 @@ if(isset($_GET['msgcode'])) {
                     <?php endif; ?>
                 </td>
                 <td class="char-head-container" style="background-image: url('ROChargen/characterhead/<?php echo $char->name; ?>'); background-position: -10px -25px;"></td>
-                <?php $timestamp = $char->unban_time; $unban_time = unix_to_human($timestamp); ?>
                 <td>
                 <?php
                 if('e' != $gen_settings[0]->emulator) {
+                    $timestamp = $char->unban_time; $unban_time = unix_to_human($timestamp);
                     if(strtotime(date("Y-m-d H:i:s",time())) > $char->unban_time){ echo '<span class="label label-success">Active</span>'; }else{ echo '<span class="label label-danger label-toggle" data-toggle="tooltip" data-placement="top" title="Until: '.$unban_time.'">Banned</span>'; }
                 }
                 echo '&nbsp;'.$char->name;

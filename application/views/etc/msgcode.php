@@ -60,17 +60,23 @@ switch($code) {
     case 405:
         $msg = '<strong>Error!</strong> You must agree to the terms of service and conditions.'; break;
     case 406:
-        $msg = '<strong>Error!</strong> Username does not follow the proper format.'; break;
+        $query = mysql_query("SELECT `un_format_error` FROM `tcp_set_acc`"); $read = mysql_fetch_assoc($query);
+        $specmsg = $read['un_format_error'];
+        $msg = '<strong>Error!</strong> '.$specmsg; break;
     case 407:
         $msg = '<strong>Error!</strong> Username is already taken.'; break;
     case 408:
-        $msg = '<strong>Error!</strong> Password does not follow the proper format.'; break;
+        $query = mysql_query("SELECT `pw_format_error` FROM `tcp_set_acc`"); $read = mysql_fetch_assoc($query);
+        $specmsg = $read['pw_format_error'];
+        $msg = '<strong>Error!</strong> '.$specmsg; break;
     case 409:
         $msg = '<strong>Error!</strong> Password does not match.'; break;
     case 410:
         $msg = '<strong>Error!</strong> Email is already in use.'; break;
     case 411:
-        $msg = '<strong>Error!</strong> You do not meet the minimum age requirement.'; break;
+        $query = mysql_query("SELECT `min_age` FROM `tcp_set_acc`"); $read = mysql_fetch_assoc($query);
+        $specmsg = $read['min_age'];
+        $msg = '<strong>Error!</strong> You must be atleast '.$specmsg.' years old to register. '; break;
     case 412:
         $msg = '<strong>Error!</strong> The captcha was answered incorrectly.'; break;
     case 413:
@@ -106,7 +112,9 @@ switch($code) {
     case 428:
         $msg = '<strong>Error!</strong> You do not have enough credits/points.'; break;
     case 429:
-        $msg = '<strong>Error!</strong> IP is already in ban list.';
+        $msg = '<strong>Error!</strong> IP is already in ban list.'; break;
+    case 430:
+        $msg = '<strong>Error!</strong> You are not allowed to change username.';
 }
     
 ?>

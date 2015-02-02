@@ -64,7 +64,7 @@ breadcrumb($crumbs,$active);
             <?php $this->load->view('pages/shop/itemlist',array('items'=>$items,'pm'=>'dp')); ?>
             </div>
             <div class="right">
-                <button class="btn btn-primary" role="submit" name="checkout">Finish and Pay &raquo;</button>
+                <button class="btn btn-primary checkout-btn" role="submit" name="checkout">Finish and Pay &raquo;</button>
             </div>
             </form>
             <?php endif; ?>
@@ -78,5 +78,8 @@ breadcrumb($crumbs,$active);
         $.post('shop/switch_currency', postdata, function(data) {
             $('#checkout-itemlist').html(data);
         });
+    });
+    $('#checkout-form').submit(function() {
+        $('.checkout-btn').addClass('disabled');        
     });
 </script>

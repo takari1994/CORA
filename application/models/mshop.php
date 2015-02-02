@@ -9,33 +9,58 @@ class Mshop extends CI_Model {
         'gift' => "You have received a cash shop gift from a friend!"
     );
     
-    public function get_shop_items($itemid=null,$index=null,$pp=null,$cond=null) {
-        $return_value = null;
-        $this->db->select('*');
-        $this->db->from('tcp_shop');
-        $this->db->join('item_db','item_db.id=tcp_shop.item_id');
-        $this->db->order_by('name_japanese','asc');
+    public function get_shop_items($itemid=null,$index=null,$pp=null,$cond=null,$count=null) {
+        $select = "*"; $tbl = "`item_db`"; $where = null; $join = null; $order = null; $limit = null;
         
-        if(null !== $index AND null !== $pp) { $this->db->limit($pp,$index); }
+        if(true == $count AND !$this->db->table_exists('item_db2'))
+            $select = "COUNT(*) AS rows";
+        if($this->db->table_exists('item_db_re'))
+            $tbl = '`item_db_re`';
         
-        if(null != $itemid) { $this->db->where(array('tcp_shop.item_id'=>$itemid)); }
-        if(null != $cond) {
+        $join  = " JOIN $tbl ON $tbl.`id`=`tcp_shop`.`item_id`"; $joinB = " JOIN `item_db2` ON `item_db2`.`id`=`tcp_shop`.`item_id`";
+        $order = " ORDER BY `name_japanese` asc";
+        
+        if(null !== $index AND null !== $pp) { $limit = " LIMIT ".$this->db->escape($index).", ".$this->db->escape($pp); }
+        
+        if(null != $itemid) {
+            //$this->db->where(array('tcp_shop.item_id'=>$itemid));
+            $where = " WHERE `tcp_shop`.`item_id`=".$this->db->escape($itemid);
+        } else if(null != $cond) {
             $x = 0;
             foreach($cond['val'] as $val) {
                 if($x == 0)
-                    $this->db->where($cond['index'],$val);
+                    $where = " WHERE `".$cond['index']."`=".$this->db->escape($val);
                 else
-                    $this->db->or_where($cond['index'],$val);
-                
+                    $where .= " OR `".$cond['index']."`=".$this->db->escape($val);
                 $x++;
             }
         }
         
-        $query = $this->db->get();
+        $qstr = "SELECT $select FROM (`tcp_shop`)".$join.$where;
         
-        if(0 < $query->num_rows()) { $return_value = $query->result(); }
+        if(null != $count AND true == $count)
+            $selectB = "COUNT(*) AS rows";
+        else
+            $selectB = "*";
         
-        return $return_value;
+        $qstrB = "SELECT $select FROM (`tcp_shop`)".$joinB.$where;
+        
+        if($this->db->table_exists('item_db2')) {
+            $qstr = "SELECT $selectB FROM (($qstrB) UNION ($qstr)) a ".$order.$limit;
+        } else {
+            $qstr .= $order.$limit;
+        }
+        
+        if($count != null AND true == $count) {
+            $query = $this->db->query($qstr);
+            $query = $query->result();
+            $query = $query[0]->rows;
+            return (0 < $query ? $query:null);
+        } else {
+            $query  = $this->db->query($qstr);
+            $result = $this->filter_result($query->result()); 
+            return ($query ? $result:null);
+        }
     }
     
     public function punch_order($recipient,$sender,$total_dp,$total_vp,$items,$xdata=null) {
@@ -136,5 +161,23 @@ class Mshop extends CI_Model {
         $query = $this->db->delete('tcp_cart');
         
         return($query ? true:false);
+    }
+    
+    public function filter_result($result) {
+        if(null != $result) {
+            for($x=0;$x<count($result);$x++) {
+                $y = 0; $flag = false;
+                for($y=0;$y<count($result);$y++) {
+                    if($result[$y]->id == $result[$x]->id AND $y < $x)
+                        $flag = true;
+                }
+                if($flag == true) {
+                    unset($result[$x]);
+                    $result = array_values($result);
+                }
+            }
+        }
+        
+        return $result;
     }
 }

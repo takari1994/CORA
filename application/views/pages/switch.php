@@ -12,11 +12,10 @@
         </div>
     </a>
     <a href="<?php echo base_url(); ?>">
-        <div class="switch-btn fl">
+        <div class="switch-btn fl last">
             <span class="glyphicon glyphicon-globe"></span>
             Website
         </div>
     </a>
-    <div class="switch-btn fl">&nbsp;</div>
 </div>
 <?php endif; ?>

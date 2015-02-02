@@ -34,7 +34,7 @@ breadcrumb($crumbs,$active);
                     <div class="spacer"></div>
                     <input type="text" class="form-control" name="fname" placeholder="First Name" required />
                     <input type="text" class="form-control" name="lname" placeholder="Last Name" required />
-                    <input type="text" name="birthday" class="datepicker-input-normal form-control" placeholder="Birthday" data-date-format="yyyy-mm-dd" required />
+                    <input type="text" name="birthday" class="datepicker-input-normal form-control" placeholder="Birthday" data-date-format="yyyy-mm-dd" readonly required />
                     &nbsp;<strong>Gender:</strong>&nbsp;
                     <input type="radio" name="gender" value="m" checked /> Male&nbsp;&nbsp;
                     <input type="radio" name="gender" value="f" /> Female

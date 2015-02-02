@@ -9,6 +9,11 @@
             <li role="presentation"><a href="#wid-<?php echo $wuid; ?>-gl-rank" data-toggle="tab">Guild</a></li>
         </ul>
         <?php endif; ?>
+        <div class="rank-1">
+        <?php if(is_array($pl) AND array_key_exists(0,$pl)): ?>
+                <div style="background-image: url('ROChargen/character/<?php echo $pl[0]->name; ?>');">&nbsp;</div>
+        <?php endif;?>
+        </div>
         <div class="tab-content">
             <?php if(null != $pl): ?>
             <div role="tabpanel" class="tab-pane fade in active tbl-container" id="wid-<?php echo $wuid; ?>-pl-rank">
@@ -62,6 +67,41 @@
                     </tbody>
                 </table>
             </div>
+            <?php else: ?>
+            <div role="tabpanel" class="tab-pane fade in active tbl-container" id="wid-<?php echo $wuid; ?>-pl-rank">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="center">Rank</th>
+                            <th colspan="2">Name</th>
+                            <?php if($plsort == 'k'): ?>
+                            <th class="center">Kills</th>
+                            <th class="center">Deaths</th>
+                            <?php elseif($plsort == 'l'): ?>
+                            <th class="center">BLvl</th>
+                            <th class="center">BExp</th>
+                            <?php elseif($plsort == 'z'): ?>
+                            <th class="right">Zeny</th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for($x=0;$x<10;$x++): ?>
+                        <tr>
+                            <td class="center"><?php echo $x+1; ?></td>
+                            <td style="width:24px;"></td>
+                            <td>-</td>
+                            <?php if($plsort == 'k' OR $plsort == 'l'): ?>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                            <?php elseif($plsort == 'z'): ?>
+                            <td class="right">-</td>
+                            <?php endif; ?>
+                        </tr>
+                        <?php endfor; ?>
+                    </tbody>
+                </table>
+            </div>
             <?php endif; ?>
             <?php if(null != $gl): ?>
             <div role="tabpanel" class="tab-pane fade<?php echo (null!=$gl&&null==$pl?' in active':''); ?> tbl-container" id="wid-<?php echo $wuid; ?>-gl-rank">
@@ -105,6 +145,35 @@
                             <td class="center">-</td>
                         </tr>
                         <?php endif; ?>
+                        <?php endfor; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php else: ?>
+            <div role="tabpanel" class="tab-pane fade<?php echo (null!=$gl&&null==$pl?' in active':''); ?> tbl-container" id="wid-<?php echo $wuid; ?>-gl-rank">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="center">Rank</th>
+                            <th colspan="2">Name</th>
+                            <?php if('c' == $glsort): ?>
+                            <th class="center">Castles</th>
+                            <th class="center">Level</th>
+                            <?php else: ?>
+                            <th class="center">Level</th>
+                            <th class="center">Castles</th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php for($x=0;$x<10;$x++): ?>
+                        <tr>
+                            <td class="center"><?php echo $x+1; ?></td>
+                            <td style="width:24px;"></td>
+                            <td>-</td>
+                            <td class="center">-</td>
+                            <td class="center">-</td>
+                        </tr>
                         <?php endfor; ?>
                     </tbody>
                 </table>

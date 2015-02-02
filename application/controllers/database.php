@@ -33,7 +33,7 @@ class Database extends TCP_Controller {
         $page =            'database/items';
         $data['crumbs'] =  $this->crumbs;
         $data['items'] =   $this->search('item','name_japanese',rawurldecode($query),$index,$pp);
-        $data['tp'] =      count($this->search('item','name_japanese',rawurldecode($query)));
+        $data['tp'] =      $this->search('item','name_japanese',rawurldecode($query),null,null,true);
         $this->page_build($title,null,$page,$data);
     }
     
@@ -51,7 +51,7 @@ class Database extends TCP_Controller {
         $page =            'database/mobs';
         $data['crumbs'] =  $this->crumbs;
         $data['mobs'] =    $this->search('mob','kName',rawurldecode($query),$index,$pp);
-        $data['tp'] =      count($this->search('mob','kName',rawurldecode($query)));
+        $data['tp'] =      $this->search('mob','kName',rawurldecode($query),null,null,true);
         $this->page_build($title,null,$page,$data);
     }
     

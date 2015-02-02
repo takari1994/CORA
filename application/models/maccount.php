@@ -15,7 +15,7 @@ class Maccount extends CI_Model {
     }
     
     public function create_profile($userid,$userpass,$email,$sex,$fname,$lname,$birthday) {
-        $data_a =     array('userid'=>$userid,'user_pass'=>$userpass,'email'=>$email,'sex'=>$sex);
+        $data_a =     array('userid'=>$userid,'user_pass'=>$userpass,'email'=>$email,'sex'=>$sex,'birthdate'=>$birthday);
         $query_a =    $this->db->insert('login',$data_a);
         $account_id = $this->db->insert_id();
         
@@ -25,7 +25,7 @@ class Maccount extends CI_Model {
         return ($query_a AND $query_b ? true:false);
     }
     
-    public function get_profile($cond=null,$index=null,$pp=null,$search=null,$sort=null) {
+    public function get_profile($cond=null,$index=null,$pp=null,$search=null,$sort=null,$count=null) {
         $this->load->model('msettings');
         $gen_settings = $this->msettings->get_set_gen();
         if('e' == $gen_settings[0]->emulator){ $group_id = 'level AS group_id'; } else { $group_id = 'group_id'; }
@@ -41,18 +41,22 @@ class Maccount extends CI_Model {
         $this->db->order_by($sort[0],$sort[1]);
         $this->db->join('tcp_profile','tcp_profile.account_id = login.account_id');
         
-        $query = $this->db->get();
-        
-        return (0 < $query->num_rows() ? $query->result():null);
+        if(null != $count AND true == $count) {
+            $query = $this->db->count_all_results();
+            return (0 < $query ? $query:null);
+        } else {
+            $query = $this->db->get();
+            return (0 < $query->num_rows() ? $query->result():null);
+        }
     }
     
-    public function update_profile($account_id,$userid,$email,$sex,$fname,$lname,$birthday) {
+    public function update_profile($account_id,$userid,$email,$sex,$fname,$lname,$birthday,$dp,$vp) {
         $this->db->where(array('account_id'=>$account_id));
-        $data_a =  array('userid'=>$userid,'email'=>$email,'sex'=>$sex);
+        $data_a =  array('userid'=>$userid,'email'=>$email,'sex'=>$sex,'birthdate'=>$birthday);
         $query_a = $this->db->update('login',$data_a);
         
         $this->db->where(array('account_id'=>$account_id));
-        $data_b =  array('fname'=>$fname,'lname'=>$lname,'birthday'=>$birthday);
+        $data_b =  array('fname'=>$fname,'lname'=>$lname,'birthday'=>$birthday,'donate_points'=>$dp,'vote_points'=>$vp);
         $query_b = $this->db->update('tcp_profile',$data_b);
         
         return ($query_a AND $query_b ? true:false);
@@ -68,19 +72,28 @@ class Maccount extends CI_Model {
         return ($query ? true:false);
     }
     
-    public function get_characters($cond=null,$index=null,$pp=null,$sort=null,$search=null) {
+    public function get_characters($cond=null,$index=null,$pp=null,$sort=null,$search=null,$count=null) {
         if(null == $sort)
             $sort = array('char.char_id','asc');
         
-        $this->db->select('char.char_id,char.name,account_id,last_map,last_x,last_y,char_num,class,base_level,job_level,zeny,char.guild_id,str,agi,vit,int,dex,luk,guild.name AS guild_name, emblem_data AS emblem,char.unban_time');
+        $this->load->model('msettings');
+        $gen_settings = $this->msettings->get_set_gen();
+        if('e' == $gen_settings[0]->emulator){ $unban_time = ''; } else { $unban_time = ',char.unban_time'; }
+        
+        $this->db->select('char.char_id,char.name,account_id,last_map,last_x,last_y,char_num,class,base_level,job_level,zeny,char.guild_id,str,agi,vit,int,dex,luk,guild.name AS guild_name, emblem_data AS emblem'.$unban_time);
         $this->db->from('char');
         if(null != $cond) { $this->db->where($cond); }
         if(null != $search) { $this->db->like($search); }
         $this->db->join('guild','guild.guild_id = char.guild_id','left');
         $this->db->order_by($sort[0],$sort[1]);
         if(null !== $index AND null !== $pp) { $this->db->limit($pp,$index); }
-        $query = $this->db->get();
-        return ($query ? $query->result():null);
+        if(null != $count AND true == $count) {
+            $query = $this->db->count_all_results();
+            return (0 < $query ? $query:null);
+        } else {
+            $query = $this->db->get();
+            return ($query ? $query->result():null);
+        }
     }
     
     public function update_character($cond,$data) {
@@ -205,15 +218,20 @@ class Maccount extends CI_Model {
         return true;
     }
     
-    public function get_ipbanlist($cond=null,$index=null,$pp=null,$sort=null,$search=null) {
+    public function get_ipbanlist($cond=null,$index=null,$pp=null,$sort=null,$search=null,$count=null) {
         if(null != $cond){ $this->db->where($cond); }
         if(null == $sort){ $sort = array('btime','asc'); }
         if(null != $cond) { $this->db->where($cond);}
         if(null != $search) { $this->db->like($search); }   
         if(null !== $index AND null !== $pp) { $this->db->limit($pp,$index); }
         $this->db->order_by($sort[0],$sort[1]);
-        $query = $this->db->get('ipbanlist');
-        return (0 < $query->num_rows()?$query->result():null);
+        if(null != $count AND true == $count) {
+            $query = $this->db->count_all_results('ipbanlist');
+            return (0 < $query ? $query:null);
+        } else {
+            $query = $this->db->get('ipbanlist');
+            return (0 < $query->num_rows()?$query->result():null);
+        }
     }
     
     public function add_ipbanlist($ip,$date,$reason=null) {

@@ -16,6 +16,5 @@
                 </a>
             </li>
             <?php $count++;endforeach; ?>
-            <li><div class="bottom"></div></li>
         </ul>
 </div>

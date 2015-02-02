@@ -25,7 +25,8 @@ pre { margin: 0; padding: 0; background: transparent; border: none; font-family:
 .block { display: block !important; }
 .inline { display: inline-block !important; }
 .vote-img { width: 50px; height: auto; }
-
+input.datepicker-input-normal:-moz-read-only { cursor: text; background-color: #fff; }
+input.datepicker-input-normal:read-only { cursor: text; background-color: #fff; }
 /** Page **/
 #page { background: #fff; }
 
@@ -43,7 +44,7 @@ pre { margin: 0; padding: 0; background: transparent; border: none; font-family:
 #switch a { color: #fff; }
 #switch a:hover { color: #d0d0d0; }
 #switch .switch-btn { padding: 10px 15px; border-left: solid 1px #707070; }
-
+#switch .switch-btn.last { border-right: solid 1px #707070; }
 /** Default Breadcrumbs **/
 .breadcrumb > li { text-transform: capitalize; }
 

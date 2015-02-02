@@ -60,7 +60,7 @@ class Community extends TCP_Controller {
             $page  = 'community/player_ladder';
             $data['crumbs'] = $this->crumbs;
             $data['ladder'] = $ladder;
-            $data['tp']     = count($this->mcommunity->player_ladder($order));
+            $data['tp']     = $this->mcommunity->player_ladder($order,null,null,true);
             $this->page_build($title,null,$page,$data);
         }
     }
@@ -96,7 +96,7 @@ class Community extends TCP_Controller {
             $page  = 'community/guild_ladder';
             $data['crumbs'] = $this->crumbs;
             $data['ladder'] = $ladder;
-            $data['tp']     = count($this->mcommunity->guild_ladder($order));
+            $data['tp']     = $this->mcommunity->guild_ladder($order,null,null,true);
             $this->page_build($title,null,$page,$data);
         }
     }
